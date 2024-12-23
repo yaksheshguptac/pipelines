@@ -28,8 +28,8 @@ class Pipeline:
 
         self.valves = self.Valves(
             **{
-                "LLAMAINDEX_OLLAMA_BASE_URL": os.getenv("LLAMAINDEX_OLLAMA_BASE_URL", "http://localhost:11434"),
-                "LLAMAINDEX_MODEL_NAME": os.getenv("LLAMAINDEX_MODEL_NAME", "llama3"),
+                "LLAMAINDEX_OLLAMA_BASE_URL": os.getenv("LLAMAINDEX_OLLAMA_BASE_URL", "http://20.197.2.185:11434"),
+                "LLAMAINDEX_MODEL_NAME": os.getenv("LLAMAINDEX_MODEL_NAME", "llama3.2:latest"),
                 "LLAMAINDEX_EMBEDDING_MODEL_NAME": os.getenv("LLAMAINDEX_EMBEDDING_MODEL_NAME", "nomic-embed-text"),
             }
         )
@@ -51,7 +51,8 @@ class Pipeline:
         # This function is called when the server is started.
         global documents, index
 
-        data_dir = "~/app/backend/data"
+        data_dir = os.path.expanduser("~/app/backend/data")
+
         if not os.path.exists(data_dir):
             os.makedirs(data_dir)
             print(f"Created missing data directory at {data_dir}")

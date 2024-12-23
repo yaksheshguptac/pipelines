@@ -67,18 +67,16 @@ class Pipeline:
             
         self.documents = SimpleDirectoryReader(data_dir).load_data()
         
-        # Check if documents are empty or None
         if not self.documents:
             print("No documents loaded. Using hardcoded data.")
             self.documents = [
-                {"text": "Nirav."},
+                {"text": "Nirav"},
                 {"text": "Aman"}
             ]
         
         # Create the index from documents (whether loaded or hardcoded)
         self.index = VectorStoreIndex.from_documents(self.documents)
         print(f"Index created: {self.index is not None}")
-
         pass
 
     async def on_shutdown(self):
@@ -93,9 +91,8 @@ class Pipeline:
 
         print(messages)
         print(user_message)
-        print(f"YYYYYYY{self.documents}")
-        print(f"XXXXXX{self.index}")
         query_engine = self.index.as_query_engine(streaming=True)
         response = query_engine.query(user_message)
 
         return response.response_gen
+# sudo docker run -d -p 0.0.0.0:9099:9099 --add-host=host.docker.internal:host-gateway -v /app/backend/data:/app/backend/data --name pipelines --restart always ghcr.io/open-webui/pipelines:main

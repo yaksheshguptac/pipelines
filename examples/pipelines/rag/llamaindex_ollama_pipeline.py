@@ -93,7 +93,8 @@ class Pipeline:
 
         print(messages)
         print(user_message)
-
+        print(self.documents)
+        print (self.index)
         query_engine = self.index.as_query_engine(streaming=True)
         response = query_engine.query(user_message)
 

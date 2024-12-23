@@ -52,6 +52,12 @@ class Pipeline:
         global documents, index
 
         data_dir = "/app/backend/data"
+        files = os.listdir(data_dir)
+
+        print(f"Contents of {data_dir}:")
+        for file in files:
+            print(file)
+
         if not os.path.exists(data_dir):
             os.makedirs(data_dir)
             print(f"Created missing data directory at {data_dir}")

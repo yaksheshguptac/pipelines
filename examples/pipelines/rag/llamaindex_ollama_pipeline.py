@@ -51,7 +51,7 @@ class Pipeline:
         # This function is called when the server is started.
         global documents, index
 
-        data_dir = "/app/backend/data"
+        data_dir = "~/app/backend/data"
         if not os.path.exists(data_dir):
             os.makedirs(data_dir)
             print(f"Created missing data directory at {data_dir}")

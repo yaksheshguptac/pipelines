@@ -55,12 +55,24 @@ class Pipeline:
         if not os.path.exists(data_dir):
             os.makedirs(data_dir)
             print(f"Created missing data directory at {data_dir}")
-    
+            
         if not os.listdir(data_dir):
-            print("Warning: Data directory is empty. Add documents to populate the index.")
-    
+            print("Warning: Data directory is empty. Adding hardcoded documents.")
+            
         self.documents = SimpleDirectoryReader(data_dir).load_data()
-        self.index = VectorStoreIndex.from_documents(self.documents if self.documents else [])
+        
+        # Check if documents are empty or None
+        if not self.documents:
+            print("No documents loaded. Using hardcoded data.")
+            self.documents = [
+                {"text": "Nirav."},
+                {"text": "Aman"}
+            ]
+        
+        # Create the index from documents (whether loaded or hardcoded)
+        self.index = VectorStoreIndex.from_documents(self.documents)
+        print(f"Index created: {self.index is not None}")
+
         pass
 
     async def on_shutdown(self):

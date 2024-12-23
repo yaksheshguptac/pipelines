@@ -51,8 +51,16 @@ class Pipeline:
         # This function is called when the server is started.
         global documents, index
 
-        self.documents = SimpleDirectoryReader("/app/backend/data").load_data()
-        self.index = VectorStoreIndex.from_documents(self.documents)
+        data_dir = "~/app/backend/data"
+        if not os.path.exists(data_dir):
+            os.makedirs(data_dir)
+            print(f"Created missing data directory at {data_dir}")
+    
+        if not os.listdir(data_dir):
+            print("Warning: Data directory is empty. Add documents to populate the index.")
+    
+        self.documents = SimpleDirectoryReader(data_dir).load_data()
+        self.index = VectorStoreIndex.from_documents(self.documents if self.documents else [])
         pass
 
     async def on_shutdown(self):

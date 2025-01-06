@@ -29,7 +29,7 @@ class Pipeline:
 
         self.valves = self.Valves(
             **{
-                "LLAMAINDEX_GROQ_BASE_URL": os.getenv("LLAMAINDEX_GROQ_BASE_URL", "https://api.groq.com/openai/v1"),
+                "LLAMAINDEX_GROQ_BASE_URL": os.getenv("LLAMAINDEX_GROQ_BASE_URL", "https://api.groq.com/openai/v1/models"),
                 "LLAMAINDEX_MODEL_NAME": os.getenv("LLAMAINDEX_MODEL_NAME", "llama-3.2-3b-preview"),
                 "LLAMAINDEX_API_KEY": os.getenv("LLAMAINDEX_API_KEY", "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"),
             }

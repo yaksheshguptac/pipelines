@@ -30,7 +30,7 @@ class Pipeline:
                 "LLAMAINDEX_OPENAI_BASE_URL": os.getenv("LLAMAINDEX_OLLAMA_BASE_URL", "https://ollama.rishika.chat"),
                 "LLAMAINDEX_MODEL_NAME": os.getenv("LLAMAINDEX_MODEL_NAME", "llama-3.2-3b-preview"),
                 "LLAMAINDEX_EMBEDDING_MODEL_NAME": os.getenv("LLAMAINDEX_EMBEDDING_MODEL_NAME", "llama-3.2-3b-preview"),
-                "LLAMAINDEX_API_KEY"="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"
+                "LLAMAINDEX_API_KEY":"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" 
 
             }
         )

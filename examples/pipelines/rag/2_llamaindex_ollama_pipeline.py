@@ -14,13 +14,6 @@ import os
 import time
 from pydantic import BaseModel
 
-from groq import Groq
-
-# Initialize Groq Client
-client = Groq(
-    api_key=os.getenv("GROQ_API_KEY", "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")
-)
-
 class Pipeline:
 
     class Valves(BaseModel):

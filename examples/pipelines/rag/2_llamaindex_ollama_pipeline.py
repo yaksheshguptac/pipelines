@@ -20,7 +20,7 @@ class Pipeline:
         print(f"Starting pipelines on script {time.time()}")
         
         # Set the Groq model for LLM tasks (query generation, etc.)
-        Settings.llm = Groq(model="llama3-70b-8192", api_key="your_groq_api_key")
+        Settings.llm = Groq(model="llama3-70b-8192", api_key="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")
 
         # Set the Hugging Face embedding model for document embeddings
         Settings.embed_model = self.huggingface_embedder

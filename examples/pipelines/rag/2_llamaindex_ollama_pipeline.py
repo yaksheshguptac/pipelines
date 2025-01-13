@@ -14,7 +14,7 @@ import os
 import time
 from pydantic import BaseModel
 
-from llama-index-llms-groq import Groq
+from llama_index.llms.groq import Groq
 
 
 class Pipeline:

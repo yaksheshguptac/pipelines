@@ -1,80 +1,56 @@
-"""
-title: Llama Index Ollama Pipeline
-author: open-webui
-date: 2024-05-30
-version: 1.0
-license: MIT
-description: A pipeline for retrieving relevant information from a knowledge base using the Llama Index library with Ollama embeddings.
-requirements: llama-index, llama-index-llms-ollama, llama-index-embeddings-ollama, llama-index-llms-groq
-"""
-
 from typing import List, Union, Generator, Iterator
-from schemas import OpenAIChatMessage
+from pydantic import BaseModel
+from transformers import AutoTokenizer, AutoModel
 import os
 import time
-from pydantic import BaseModel
-
 from llama_index.llms.groq import Groq
-
+from llama_index.core import Settings, VectorStoreIndex, SimpleDirectoryReader
+from llama_index.embeddings.huggingface import HuggingFaceEmbedding
 
 class Pipeline:
 
     def __init__(self):
         self.documents = None
         self.index = None
-        # llm = Groq(model="llama3-70b-8192", api_key="your_api_key")
+        # self.tokenizer = AutoTokenizer.from_pretrained("bert-base-uncased")
+        # self.model = AutoModel.from_pretrained("bert-base-uncased")
+        self.huggingface_embedder = HuggingFaceEmbedding(model_name="BAAI/bge-small-en-v1.5")
 
     async def on_startup(self):
-        print(f"Starting pipelines on_script{time.now()}")
-        from llama_index.core import Settings, VectorStoreIndex, SimpleDirectoryReader
+        print(f"Starting pipelines on script {time.time()}")
+        
+        # Set the Groq model for LLM tasks (query generation, etc.)
+        Settings.llm = Groq(model="llama3-70b-8192", api_key="your_groq_api_key")
 
-        Settings.llm = Groq(model="llama3-70b-8192", api_key="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")
-        print(f"Model Loaded {time.now()}")
-        # This function is called when the server is started.
-        global documents, index
-
+        # Set the Hugging Face embedding model for document embeddings
+        Settings.embed_model = self.huggingface_embedder
+        
+        print(f"Models loaded: {time.time()}")
+        
+        # Load documents
         data_dir = "/app/backend/data"
         files = os.listdir(data_dir)
-
+        
         print(f"Contents of {data_dir}:")
         for file in files:
             print(file)
 
-        if not os.path.exists(data_dir):
-            os.makedirs(data_dir)
-            print(f"Created missing data directory at {data_dir}")
-            
-        if not os.listdir(data_dir):
-            print("Warning: Data directory is empty. Adding hardcoded documents.")
-            
         self.documents = SimpleDirectoryReader(data_dir).load_data()
-        
-        if not self.documents:
-            print("No documents loaded. Using hardcoded data.")
-            self.documents = [
-                {"text": "Nirav"},
-                {"text": "Aman"}
-            ]
-        
+        print(f"Documents loaded: {self.documents is not None}")
+
         # Create the index from documents (whether loaded or hardcoded)
         self.index = VectorStoreIndex.from_documents(self.documents)
         print(f"Index created: {self.index is not None}")
-        pass
-
+    
     async def on_shutdown(self):
-        # This function is called when the server is stopped.
         pass
 
-    def pipe(
-        self, user_message: str, model_id: str, messages: List[dict], body: dict
-    ) -> Union[str, Generator, Iterator]:
-        # This is where you can add your custom RAG pipeline.
-        # Typically, you would retrieve relevant information from your knowledge base and synthesize it to generate a response.
-
+    def pipe(self, user_message: str, model_id: str, messages: List[dict], body: dict) -> Union[str, Generator, Iterator]:
         print(messages)
         print(user_message)
+
+        # Query using Groq LLM
         query_engine = self.index.as_query_engine(streaming=True)
         response = query_engine.query(user_message)
 
         return response.response_gen
-# sudo docker run -d -p 0.0.0.0:9099:9099 --add-host=host.docker.internal:host-gateway -v /app/backend/data:/app/backend/data --name pipelines --restart always ghcr.io/open-webui/pipelines:main

@@ -37,10 +37,12 @@ class Pipeline:
 
         self.documents = SimpleDirectoryReader(data_dir).load_data()
         print(f"Documents loaded: {self.documents is not None}")
+        print(self.documents)
 
         # Create the index from documents (whether loaded or hardcoded)
         self.index = VectorStoreIndex.from_documents(self.documents)
         print(f"Index created: {self.index is not None}")
+        print(self.index)
     
     async def on_shutdown(self):
         pass

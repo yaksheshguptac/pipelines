@@ -14,7 +14,7 @@ class Pipeline:
         self.index = None
         # self.tokenizer = AutoTokenizer.from_pretrained("bert-base-uncased")
         # self.model = AutoModel.from_pretrained("bert-base-uncased")
-        self.huggingface_embedder = HuggingFaceEmbedding(model_name="BAAI/bge-small-en-v1.5")
+        self.huggingface_embedder = HuggingFaceEmbedding()
 
     async def on_startup(self):
         print(f"Starting pipelines on script {time.time()}")

@@ -7,7 +7,8 @@ license: MIT
 description: A pipeline for retrieving relevant information from a knowledge base using the Llama Index library.
 requirements: llama-index
 """
-
+import os
+print("OPENAI_API_KEY:", os.environ.get("OPENAI_API_KEY", "Not Set"))
 from typing import List, Union, Generator, Iterator
 from schemas import OpenAIChatMessage
 

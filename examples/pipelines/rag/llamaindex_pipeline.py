@@ -8,15 +8,6 @@ description: A pipeline for retrieving relevant information from a knowledge bas
 requirements: llama-index
 """
 
-import os
-
-# Check and print the API key
-api_key = os.getenv("OPENAI_API_KEY")
-if api_key:
-    print(f"OPENAI_API_KEY: {api_key}")
-else:
-    print("OPENAI_API_KEY is not set!")
-
 from typing import List, Union, Generator, Iterator
 from schemas import OpenAIChatMessage
 
@@ -28,6 +19,13 @@ class Pipeline:
 
     async def on_startup(self):
         import os
+        
+        # Check and print the API key
+        api_key = os.getenv("OPENAI_API_KEY")
+        if api_key:
+            print(f"OPENAI_API_KEY: {api_key}")
+        else:
+            print("OPENAI_API_KEY is not set!")
 
         # Set the OpenAI API key
         # os.environ["OPENAI_API_KEY"] = "sk-proj-RVKw6X9XuysMvIvPDljO1rLOSFpXe_gJvlW1F"

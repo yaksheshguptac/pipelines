@@ -20,9 +20,6 @@ class Pipeline:
     async def on_startup(self):
         import os
 
-        # Set the OpenAI API key
-        os.environ["OPENAI_API_KEY"] = "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"
-
         from llama_index.core import VectorStoreIndex, SimpleDirectoryReader
 
         self.documents = SimpleDirectoryReader("/app/backend/data").load_data()

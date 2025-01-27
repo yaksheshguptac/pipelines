@@ -21,7 +21,7 @@ class Pipeline:
         import os
 
         from llama_index.core import VectorStoreIndex, SimpleDirectoryReader
-
+        print("OPENAI_API_KEY:", os.environ.get("OPENAI_API_KEY", "Not Set"))
         self.documents = SimpleDirectoryReader("/app/backend/data").load_data()
         self.index = VectorStoreIndex.from_documents(self.documents)
         # This function is called when the server is started.

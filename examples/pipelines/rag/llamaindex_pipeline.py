@@ -21,7 +21,7 @@ class Pipeline:
         import os
 
         # Set the OpenAI API key
-        os.environ["OPENAI_API_KEY"] = "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"
+        os.environ["OPENAI_API_KEY"] = "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"
 
         from llama_index.core import VectorStoreIndex, SimpleDirectoryReader
 

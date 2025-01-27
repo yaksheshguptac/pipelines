@@ -7,8 +7,7 @@ license: MIT
 description: A pipeline for retrieving relevant information from a knowledge base using the Llama Index library.
 requirements: llama-index
 """
-import os
-print("OPENAI_API_KEY:", os.environ.get("OPENAI_API_KEY", "Not Set"))
+
 from typing import List, Union, Generator, Iterator
 from schemas import OpenAIChatMessage
 
@@ -21,8 +20,11 @@ class Pipeline:
     async def on_startup(self):
         import os
 
+        # Set the OpenAI API key
+        os.environ["OPENAI_API_KEY"] = "your-api-key-here"
+
         from llama_index.core import VectorStoreIndex, SimpleDirectoryReader
-        print("OPENAI_API_KEY:", os.environ.get("OPENAI_API_KEY", "Not Set"))
+
         self.documents = SimpleDirectoryReader("/app/backend/data").load_data()
         self.index = VectorStoreIndex.from_documents(self.documents)
         # This function is called when the server is started.

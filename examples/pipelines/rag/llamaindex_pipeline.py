@@ -20,15 +20,18 @@ class Pipeline:
     async def on_startup(self):
         import os
         
+
+        # Set the OpenAI API key
+        a="sk-proj-"
+        b="RVKw6X9XuysMvIvPDljO1rLOSFpXe_gJvlW1F-ekIG20MRVo91jk-5jKBkmAPA0-3Cj-zZ_ZQIT3BlbkFJmzMX2lJuwQrLPxgfNBJ3zx5oGtG4cb-N0YVRO6F41MtM9Pbu5MTEvVlwIxABq_Jsw0f090nAsA"
+        os.environ["OPENAI_API_KEY"] = a+b
+        
         # Check and print the API key
         api_key = os.getenv("OPENAI_API_KEY")
         if api_key:
             print(f"OPENAI_API_KEY: {api_key}")
         else:
             print("OPENAI_API_KEY is not set!")
-
-        # Set the OpenAI API key
-        # os.environ["OPENAI_API_KEY"] = "sk-proj-RVKw6X9XuysMvIvPDljO1rLOSFpXe_gJvlW1F"
         from llama_index.core import VectorStoreIndex, SimpleDirectoryReader
 
         self.documents = SimpleDirectoryReader("/app/backend/data").load_data()

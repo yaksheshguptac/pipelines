@@ -34,7 +34,7 @@ class Pipeline:
         )
 
     async def on_startup(self):
-        print(f"Starting pipelines on_script{time.now()}")
+        print(f"Starting pipelines on_script{time.time()}")
         from llama_index.embeddings.ollama import OllamaEmbedding
         from llama_index.llms.ollama import Ollama
         from llama_index.core import Settings, VectorStoreIndex, SimpleDirectoryReader
@@ -47,7 +47,7 @@ class Pipeline:
             model=self.valves.LLAMAINDEX_MODEL_NAME,
             base_url=self.valves.LLAMAINDEX_OLLAMA_BASE_URL,
         )
-        print(f"Model Loaded {time.now()}")
+        print(f"Model Loaded {time.time()}")
         # This function is called when the server is started.
         global documents, index
 

@@ -34,9 +34,9 @@ class Pipeline:
                 "LLAMAINDEX_EMBEDDING_MODEL_NAME": os.getenv("LLAMAINDEX_EMBEDDING_MODEL_NAME", "nomic-embed-text"),
             }
         )
-    async def inlet(self, body: dict, user: Optional[dict] = None) -> dict:
+    async def inlet(self, body: dict, user):
         print(f"inlet")
-    async def outlet(self, body: dict, user: Optional[dict] = None) -> dict:
+    async def outlet(self, body: dict, user):
         print(f"outlet")
     async def on_startup(self):
         a="sk-proj-"

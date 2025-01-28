@@ -27,9 +27,9 @@ class Pipeline:
 
         self.valves = self.Valves(
             **{
-                "LLAMAINDEX_OLLAMA_BASE_URL": os.getenv("LLAMAINDEX_OLLAMA_BASE_URL", "http://172.172.162.230:11434/"),
-                "LLAMAINDEX_MODEL_NAME": os.getenv("LLAMAINDEX_MODEL_NAME", "llama3.2:3b"),
-                "LLAMAINDEX_EMBEDDING_MODEL_NAME": os.getenv("LLAMAINDEX_EMBEDDING_MODEL_NAME", "nomic-embed-text"),
+                "LLAMAINDEX_OLLAMA_BASE_URL":  "http://172.172.162.230:11434/",
+                "LLAMAINDEX_MODEL_NAME": "llama3.2:3b",
+                "LLAMAINDEX_EMBEDDING_MODEL_NAME": "nomic-embed-text",
             }
         )
 

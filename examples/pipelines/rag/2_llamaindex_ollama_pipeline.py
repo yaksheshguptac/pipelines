@@ -45,14 +45,14 @@ class Pipeline:
             print("OPENAI_API_KEY is not set!")
 
         
-        print(f"Starting pipelines on_script{time.now()}")
+        print(f"Starting pipelines on_script{time.time()}")
         from llama_index.embeddings.openai import OpenAIEmbedding
         # from llama_index.llms.ollama import Ollama
         from llama_index.core import Settings, VectorStoreIndex, SimpleDirectoryReader
         embed_model = OpenAIEmbedding(model="text-embedding-3-small",embed_batch_size=10)
         Settings.embed_model = embed_model
         
-        print(f"Model Loaded {time.now()}")
+        print(f"Model Loaded {time.time()}")
         # This function is called when the server is started.
         global documents, index
 

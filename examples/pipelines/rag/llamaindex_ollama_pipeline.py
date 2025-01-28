@@ -51,7 +51,7 @@ class Pipeline:
         # This function is called when the server is started.
         global documents, index
 
-        data_dir = "/app/backend/data"
+        data_dir = "/home/azureuser/data"
         files = os.listdir(data_dir)
 
         print(f"Contents of {data_dir}:")

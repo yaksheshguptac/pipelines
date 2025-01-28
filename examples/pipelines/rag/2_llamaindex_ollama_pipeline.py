@@ -48,10 +48,13 @@ class Pipeline:
         print(f"Starting pipelines on_script{time.time()}")
         from llama_index.embeddings.openai import OpenAIEmbedding
         # from llama_index.llms.ollama import Ollama
+        from llama_index.llms.openai import OpenAI
         from llama_index.core import Settings, VectorStoreIndex, SimpleDirectoryReader
         embed_model = OpenAIEmbedding(model="text-embedding-3-small",embed_batch_size=10)
         Settings.embed_model = embed_model
-        
+        Settings.llm = OpenAI(model="gpt-3.5-turbo-0125")
+
+    
         print(f"Model Loaded {time.time()}")
         # This function is called when the server is started.
         global documents, index

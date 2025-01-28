@@ -5,14 +5,15 @@ date: 2024-05-30
 version: 1.0
 license: MIT
 description: A pipeline for retrieving relevant information from a knowledge base using the Llama Index library with Ollama embeddings.
-requirements: llama-index, llama-index-llms-ollama, llama-index-embeddings-ollama, llama-index-embeddings-openai
+requirements: llama-index, llama-index-llms-ollama, llama-index-embeddings-ollama
 """
 
 from typing import List, Union, Generator, Iterator
-# from schemas import OpenAIChatMessage
+from schemas import OpenAIChatMessage
 import os
 import time
 from pydantic import BaseModel
+
 
 class Pipeline:
 
@@ -27,9 +28,9 @@ class Pipeline:
 
         self.valves = self.Valves(
             **{
-                "LLAMAINDEX_OLLAMA_BASE_URL": os.getenv("LLAMAINDEX_OLLAMA_BASE_URL", "https://ollama.rishika.chat"),
-                "LLAMAINDEX_MODEL_NAME": os.getenv("LLAMAINDEX_MODEL_NAME", "llama3.2:latest"),
-                "LLAMAINDEX_EMBEDDING_MODEL_NAME": os.getenv("LLAMAINDEX_EMBEDDING_MODEL_NAME", "llama3.2:latest"),
+                "LLAMAINDEX_OLLAMA_BASE_URL": os.getenv("LLAMAINDEX_OLLAMA_BASE_URL", "http://localhost:11434"),
+                "LLAMAINDEX_MODEL_NAME": os.getenv("LLAMAINDEX_MODEL_NAME", "llama3"),
+                "LLAMAINDEX_EMBEDDING_MODEL_NAME": os.getenv("LLAMAINDEX_EMBEDDING_MODEL_NAME", "nomic-embed-text"),
             }
         )
 
@@ -47,7 +48,6 @@ class Pipeline:
         
         print(f"Starting pipelines on_script{time.time()}")
         from llama_index.embeddings.openai import OpenAIEmbedding
-        # from llama_index.llms.ollama import Ollama
         from llama_index.llms.openai import OpenAI
         from llama_index.core import Settings, VectorStoreIndex, SimpleDirectoryReader
         embed_model = OpenAIEmbedding(model="text-embedding-3-small",embed_batch_size=10)
@@ -59,32 +59,9 @@ class Pipeline:
         # This function is called when the server is started.
         global documents, index
 
-        data_dir = "/app/backend/data"
-        files = os.listdir(data_dir)
-
-        print(f"Contents of {data_dir}:")
-        for file in files:
-            print(file)
-
-        if not os.path.exists(data_dir):
-            os.makedirs(data_dir)
-            print(f"Created missing data directory at {data_dir}")
-            
-        if not os.listdir(data_dir):
-            print("Warning: Data directory is empty. Adding hardcoded documents.")
-            
-        self.documents = SimpleDirectoryReader(data_dir).load_data()
-        
-        if not self.documents:
-            print("No documents loaded. Using hardcoded data.")
-            self.documents = [
-                {"text": "Nirav"},
-                {"text": "Aman"}
-            ]
-        
-        # Create the index from documents (whether loaded or hardcoded)
+        self.documents = SimpleDirectoryReader("/home/azureuser/data").load_data()
+        print(self.documents)
         self.index = VectorStoreIndex.from_documents(self.documents)
-        print(f"Index created: {self.index is not None}")
         pass
 
     async def on_shutdown(self):
@@ -99,8 +76,8 @@ class Pipeline:
 
         print(messages)
         print(user_message)
+
         query_engine = self.index.as_query_engine(streaming=True)
         response = query_engine.query(user_message)
 
         return response.response_gen
-# sudo docker run -d -p 0.0.0.0:9099:9099 --add-host=host.docker.internal:host-gateway -v /app/backend/data:/app/backend/data --name pipelines --restart always ghcr.io/open-webui/pipelines:main

@@ -34,7 +34,7 @@ class Pipeline:
             print("OPENAI_API_KEY is not set!")
         from llama_index.core import VectorStoreIndex, SimpleDirectoryReader
 
-        self.documents = SimpleDirectoryReader("/app/backend/data").load_data()
+        self.documents = SimpleDirectoryReader("/home/azureuser/data").load_data()
         self.index = VectorStoreIndex.from_documents(self.documents)
         # This function is called when the server is started.
         pass

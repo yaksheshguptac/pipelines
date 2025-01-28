@@ -8,7 +8,8 @@ description: A pipeline for retrieving relevant information from a knowledge bas
 requirements: llama-index, llama-index-llms-openai, llama-index-embeddings-openai
 """
 
-from typing import List, Union, Generator, Iterator
+from typing import List, Union, Generator, Iterator, Optional
+
 from schemas import OpenAIChatMessage
 import os
 import time

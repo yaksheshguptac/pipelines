@@ -37,7 +37,7 @@ class Pipeline:
     async def inlet(self, body: dict, user: Optional[dict] = None) -> dict:
         print(f"inlet")
     async def outlet(self, body: dict, user: Optional[dict] = None) -> dict:
-        print(f"outlet:{__name__}")
+        print(f"outlet")
     async def on_startup(self):
         a="sk-proj-"
         b="RVKw6X9XuysMvIvPDljO1rLOSFpXe_gJvlW1F-ekIG20MRVo91jk-5jKBkmAPA0-3Cj-zZ_ZQIT3BlbkFJmzMX2lJuwQrLPxgfNBJ3zx5oGtG4cb-N0YVRO6F41MtM9Pbu5MTEvVlwIxABq_Jsw0f090nAsA"

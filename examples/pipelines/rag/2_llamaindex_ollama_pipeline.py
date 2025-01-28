@@ -54,7 +54,7 @@ class Pipeline:
         Settings.embed_model = embed_model
         Settings.llm = OpenAI(model="gpt-3.5-turbo-0125")
 
-    
+        print("LLM openAi")
         print(f"Model Loaded {time.time()}")
         # This function is called when the server is started.
         global documents, index

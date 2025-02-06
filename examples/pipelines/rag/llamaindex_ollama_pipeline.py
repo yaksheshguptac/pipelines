@@ -90,7 +90,7 @@ class Pipeline:
         # Typically, you would retrieve relevant information from your knowledge base and synthesize it to generate a response.
 
         print(f"Message:- {messages}")
-        print(f"Message:- {user_message}")
+        print(f"User Message:- {user_message}")
         query_engine = self.index.as_query_engine(streaming=True)
         response = query_engine.query(user_message)
 
